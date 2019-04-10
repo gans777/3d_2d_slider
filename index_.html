@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>3d карусель</title>
+
+    <style>
+        ul {
+            height: 400px;
+            width: 225px;
+            margin: 0 auto;
+            list-style: none;
+            position: relative;
+        }
+
+        ul li {
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.6s ease-in;
+            opacity: 0;
+            margin-top: 10px;
+        }
+
+        ul li img {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        li.active {
+            z-index: 999;
+            opacity: 1;
+        }
+
+        li.left2 {
+            transform: perspective(600px) translateX(-160%) rotateY(-40deg) scale(0.5);
+            opacity: 1;
+        }
+
+        li.left1 {
+            transform: translateX(-102%) scale(0.8);
+            opacity: 1;
+        }
+
+        li.right1 {
+            transform: translateX(102%) scale(0.8);
+            opacity: 1;
+        }
+
+        li.right2 {
+            transform: perspective(600px) translateX(160%) rotateY(40deg) scale(0.5);
+            opacity: 1;
+        }
+
+    </style>
+
+</head>
+<body>
+<ul>
+    <li class="left2">
+        <img src="photo/most_popular/first_container.jpg">
+    </li>
+
+    <li class="left1">
+        <img src="photo/most_popular/fourth_container.jpg">
+    </li>
+
+    <li class="active">
+        <img src="photo/most_popular/five_container.jpg">
+    </li>
+
+    <li class="right1">
+        <img src="photo-photo/most_popular/fourth_container.jpg">
+    </li>
+
+    <li class="right2">
+        <img src="5.png">
+    </li>
+    <li >
+        <img src="6.png">
+    </li>
+    <li >
+        <img src="7.png">
+    </li>
+</ul>
+<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+    $(function(){
+
+
+        var $lis = $('ul').find('li'),
+            length = $lis.length;
+
+        $lis.each(function(index,item){
+            $(item).attr('data-id',index);
+        });
+
+
+        function slider($lis,index,length){
+            $lis.each(function(index,item){
+                item.className = '';
+            });
+            index +=length;
+            $($lis[index%length]).addClass('active');
+            $($lis[(index-1)%length]).addClass('left1');
+            $($lis[(index-2)%length]).addClass('left2');
+            $($lis[(index+1)%length]).addClass('right1');
+            $($lis[(index+2)%length]).addClass('right2');
+        }
+
+
+        slider($lis,2,length);
+
+        $lis.on('click',function(e){
+            var id = parseInt($(e.target).parents('li').attr('data-id'));
+            slider($lis,id,length);
+        })
+
+    });
+</script>
+</body>
+</html>
